@@ -2,6 +2,7 @@ import java.util.UUID;
 
 public class HDFCAccount implements BankInterface{
 
+    // first set properties
     private String name;
     private String accountNo;
     private int balance;
@@ -9,7 +10,7 @@ public class HDFCAccount implements BankInterface{
     private double rateOfInterest;
 
 
-
+    // second create constructor with properties which are used to create object
     public HDFCAccount(String name, int balance, String password) {
         this.name = name;
         this.balance = balance;
@@ -66,12 +67,22 @@ public class HDFCAccount implements BankInterface{
     @Override
     public String depositMoney(int amount) {
         this.balance += amount;
-        return "Your account is credited with " + amount;
+        return "Your account is credited with " + amount + " updated balance is " + balance;
     }
 
     @Override
-    public String withdrawMoney() {
-        return "";
+    public String withdrawMoney(int amount, String enteredPassword) {
+        if(enteredPassword.equals(this.password)){
+            if(this.balance < amount){
+                return "Insufficient balance";
+            }
+            else{
+                this.balance -= amount;
+                return "Rs." + amount + " deducted and updated balance is " + this.balance;
+            }
+        }else{
+            return "Entered password is incorrect";
+        }
     }
 
     @Override
@@ -79,3 +90,4 @@ public class HDFCAccount implements BankInterface{
         return (balance * rateOfInterest * time)/ 100.0;
     }
 }
+
